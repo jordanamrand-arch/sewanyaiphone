@@ -31,6 +31,8 @@ import { renderTransaksiForm } from './pages/transaksi-form.js';
 import { renderTransaksiDetail } from './pages/transaksi-detail.js';
 import { renderLog } from './pages/log.js';
 import { renderPengaturan } from './pages/pengaturan.js';
+import { renderJadwal } from './pages/jadwal.js';
+import { renderLaporan } from './pages/laporan.js';
 
 // ============ Initialize ============
 
@@ -101,6 +103,14 @@ route('/transaksi/:id', requireAuth((params) => {
 
 route('/log', requireAuth(() => {
   renderLog();
+}));
+
+route('/jadwal', requireAuth(() => {
+  renderJadwal();
+}));
+
+route('/laporan', requireAuth(() => {
+  renderLaporan();
 }));
 
 route('/pengaturan', requireAuth(() => {

@@ -77,6 +77,17 @@ export function renderDashboard() {
         ${renderAlerts(stats)}
       </div>
 
+      <!-- Revenue Chart -->
+      <div class="section-header" style="margin-top: var(--space-xl);">
+        <h2 class="section-title">
+          <i data-lucide="bar-chart-3"></i>
+          Grafik Pendapatan Mingguan
+        </h2>
+      </div>
+      <div style="background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: var(--space-lg); box-shadow: var(--shadow-sm); height: 300px; position: relative;">
+        <canvas id="revenueChart"></canvas>
+      </div>
+
       <!-- Active Transactions -->
       <div class="section-header">
         <h2 class="section-title">
@@ -142,6 +153,9 @@ export function renderDashboard() {
     });
   });
 
+  // Initialize Revenue Chart
+  initRevenueChart();
+
   // Live countdown updates
   countdownInterval = setInterval(() => {
     const body = document.getElementById('active-tx-body');
@@ -158,6 +172,72 @@ export function renderDashboard() {
       countdownInterval = null;
     }
   };
+}
+
+import Chart from 'chart.js/auto';
+
+function initRevenueChart() {
+  const ctx = document.getElementById('revenueChart');
+  if (!ctx) return;
+
+  const transactions = store.getTransactions().filter(t => t.status_pembayaran !== 'menunggu_dp');
+  
+  // Group by week (last 4 weeks)
+  const now = new Date();
+  const weeks = Array(4).fill(0);
+  const weekLabels = [];
+  
+  for (let i = 3; i >= 0; i--) {
+    const d = new Date(now);
+    d.setDate(d.getDate() - (i * 7));
+    weekLabels.push(`Minggu ke-${4-i} (${d.getDate()}/${d.getMonth()+1})`);
+  }
+
+  transactions.forEach(tx => {
+    const date = new Date(tx.created_at);
+    const diffTime = Math.abs(now - date);
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    
+    if (diffDays <= 28) {
+      const weekIndex = 3 - Math.floor(diffDays / 7);
+      if (weekIndex >= 0 && weekIndex < 4) {
+        weeks[weekIndex] += (tx.total_harga || 0);
+      }
+    }
+  });
+
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: weekLabels,
+      datasets: [{
+        label: 'Pendapatan Mingguan (Rp)',
+        data: weeks,
+        backgroundColor: 'rgba(99, 102, 241, 0.8)',
+        borderRadius: 6,
+        borderWidth: 0,
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false }
+      },
+      scales: {
+        y: {
+          beginAtZero: true,
+          ticks: {
+            callback: function(value) {
+              if (value >= 1000000) return 'Rp ' + (value / 1000000) + ' Juta';
+              if (value >= 1000) return 'Rp ' + (value / 1000) + ' Ribu';
+              return value;
+            }
+          }
+        }
+      }
+    }
+  });
 }
 
 function renderAlerts(stats) {

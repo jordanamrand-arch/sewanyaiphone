@@ -7,9 +7,11 @@ import { navigate } from '../router.js';
 
 const NAV_ITEMS = [
   { path: '/dashboard', icon: 'layout-dashboard', label: 'Dashboard' },
+  { path: '/jadwal', icon: 'calendar-days', label: 'Jadwal Sewa' },
   { path: '/inventaris', icon: 'smartphone', label: 'Inventaris' },
   { path: '/harga', icon: 'wallet', label: 'Matriks Harga' },
   { path: '/transaksi', icon: 'clipboard-list', label: 'Transaksi' },
+  { path: '/laporan', icon: 'file-bar-chart', label: 'Laporan' },
   { path: '/log', icon: 'scroll-text', label: 'Log Aktivitas' },
 ];
 
