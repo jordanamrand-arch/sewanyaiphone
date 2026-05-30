@@ -13,6 +13,8 @@ import './styles/harga.css';
 import './styles/transaksi.css';
 import './styles/log.css';
 import './styles/pengaturan.css';
+import './styles/jadwal.css';
+import './styles/laporan.css';
 
 // Core
 import { store } from './store.js';

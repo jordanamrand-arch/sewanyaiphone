@@ -1,12 +1,6 @@
 /* ============================================
    Sewanya iPhone — Design System & Global Styles
    ============================================ */
-@import './variables.css';
-@import './global.css';
-@import './components.css';
-@import './layout.css';
-@import './jadwal.css';
-@import './laporan.css';
 /* ---------- CSS Custom Properties ---------- */
 :root {
   /* Background */
