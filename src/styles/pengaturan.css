@@ -1,0 +1,134 @@
+/* ============================================
+   Sewanya iPhone — Pengaturan Styles
+   ============================================ */
+
+.settings-container {
+  max-width: 700px;
+}
+
+.settings-tabs {
+  display: flex;
+  gap: 2px;
+  background: var(--bg-glass);
+  border: 1px solid var(--bg-glass-border);
+  border-radius: var(--radius-md);
+  padding: 3px;
+  margin-bottom: var(--space-lg);
+}
+
+.settings-tab {
+  padding: 10px 20px;
+  border-radius: var(--radius-sm);
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  border: none;
+  background: transparent;
+}
+
+.settings-tab:hover {
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.settings-tab.active {
+  background: var(--accent-gradient);
+  color: white;
+}
+
+.settings-section {
+  background: var(--bg-glass);
+  border: 1px solid var(--bg-glass-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+}
+
+.settings-section-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: var(--space-lg);
+  padding-bottom: var(--space-sm);
+  border-bottom: 1px solid var(--bg-glass-border);
+}
+
+/* User management */
+.user-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-md);
+}
+
+.user-list-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-md);
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--bg-glass-border);
+  border-radius: var(--radius-md);
+}
+
+.user-list-info {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.user-list-avatar {
+  width: 36px;
+  height: 36px;
+  background: var(--accent-gradient);
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: white;
+}
+
+.user-list-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.user-list-name {
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.user-list-role {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  text-transform: capitalize;
+}
+
+.user-list-actions {
+  display: flex;
+  gap: var(--space-xs);
+}
+
+/* About */
+.about-info {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.about-row {
+  display: flex;
+  justify-content: space-between;
+  padding: var(--space-sm) 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+.about-row .label {
+  color: var(--text-secondary);
+}
+
+.about-row .value {
+  font-weight: 500;
+}

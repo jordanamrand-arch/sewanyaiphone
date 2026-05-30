@@ -1,0 +1,138 @@
+/* ============================================
+   Sewanya iPhone — Inventaris Styles
+   ============================================ */
+
+.iphone-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-md);
+}
+
+.iphone-card {
+  background: var(--bg-glass);
+  border: 1px solid var(--bg-glass-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+  transition: all var(--transition-base);
+}
+
+.iphone-card:hover {
+  background: var(--bg-card-hover);
+  box-shadow: var(--shadow-glow);
+  transform: translateY(-2px);
+}
+
+.iphone-card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: var(--space-md);
+}
+
+.iphone-model {
+  font-size: 1.05rem;
+  font-weight: 600;
+}
+
+.iphone-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-md);
+}
+
+.iphone-detail {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+.iphone-detail i {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  color: var(--text-muted);
+}
+
+.battery-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.battery-bar {
+  flex: 1;
+}
+
+.battery-value {
+  font-weight: 600;
+  font-size: 0.85rem;
+  min-width: 35px;
+  text-align: right;
+}
+
+.iphone-card-footer {
+  display: flex;
+  gap: var(--space-sm);
+  padding-top: var(--space-md);
+  border-top: 1px solid var(--bg-glass-border);
+}
+
+/* Battery Health Slider in Modal */
+.battery-slider-wrapper {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.battery-slider {
+  flex: 1;
+  -webkit-appearance: none;
+  appearance: none;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-full);
+  outline: none;
+}
+
+.battery-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  background: var(--accent-gradient);
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(99, 102, 241, 0.4);
+}
+
+.battery-slider::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  background: var(--accent-start);
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.battery-slider-value {
+  font-weight: 700;
+  font-size: 1.1rem;
+  min-width: 45px;
+  text-align: center;
+}
+
+/* Responsive */
+@media (max-width: 1199px) {
+  .iphone-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 767px) {
+  .iphone-grid {
+    grid-template-columns: 1fr;
+  }
+}

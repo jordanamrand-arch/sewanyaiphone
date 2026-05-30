@@ -1,0 +1,236 @@
+/* ============================================
+   Sewanya iPhone — Transaksi Styles
+   ============================================ */
+
+/* Transaction form */
+.tx-form-card {
+  background: var(--bg-glass);
+  border: 1px solid var(--bg-glass-border);
+  border-radius: var(--radius-xl);
+  max-width: 700px;
+}
+
+.tx-form-section {
+  padding: var(--space-lg);
+  border-bottom: 1px solid var(--bg-glass-border);
+}
+
+.tx-form-section:last-child {
+  border-bottom: none;
+}
+
+.tx-form-section-title {
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin-bottom: var(--space-md);
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  color: var(--text-primary);
+}
+
+.tx-form-section-title i {
+  width: 18px;
+  height: 18px;
+  color: var(--accent-start);
+}
+
+/* Price Display */
+.price-display {
+  background: rgba(99, 102, 241, 0.08);
+  border: 1px solid rgba(99, 102, 241, 0.15);
+  border-radius: var(--radius-md);
+  padding: var(--space-lg);
+  text-align: center;
+}
+
+.price-label {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  margin-bottom: var(--space-xs);
+}
+
+.price-value {
+  font-size: 2rem;
+  font-weight: 800;
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.price-breakdown {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-md);
+  margin-top: var(--space-md);
+}
+
+.price-item {
+  text-align: center;
+}
+
+.price-item-label {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-bottom: 2px;
+}
+
+.price-item-value {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+/* Transaction Detail */
+.tx-detail {
+  max-width: 800px;
+}
+
+.tx-detail-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  margin-bottom: var(--space-lg);
+  flex-wrap: wrap;
+}
+
+.tx-detail-id {
+  font-size: 1.5rem;
+  font-weight: 800;
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.tx-detail-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-md);
+  margin-bottom: var(--space-lg);
+}
+
+.tx-detail-card {
+  background: var(--bg-glass);
+  border: 1px solid var(--bg-glass-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+}
+
+.tx-detail-card h3 {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  margin-bottom: var(--space-md);
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.tx-detail-card h3 i {
+  width: 16px;
+  height: 16px;
+}
+
+.tx-detail-row {
+  display: flex;
+  justify-content: space-between;
+  padding: var(--space-sm) 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+  font-size: 0.9rem;
+}
+
+.tx-detail-row:last-child {
+  border-bottom: none;
+}
+
+.tx-detail-row .label {
+  color: var(--text-secondary);
+}
+
+.tx-detail-row .value {
+  font-weight: 500;
+  text-align: right;
+}
+
+.tx-detail-actions {
+  display: flex;
+  gap: var(--space-sm);
+  flex-wrap: wrap;
+  margin-bottom: var(--space-lg);
+}
+
+/* Timeline */
+.timeline {
+  position: relative;
+  padding-left: var(--space-lg);
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 8px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--bg-glass-border);
+}
+
+.timeline-item {
+  position: relative;
+  padding-bottom: var(--space-md);
+}
+
+.timeline-item::before {
+  content: '';
+  position: absolute;
+  left: calc(-1 * var(--space-lg) + 4px);
+  top: 6px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--accent-start);
+  border: 2px solid var(--bg-secondary);
+}
+
+.timeline-time {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-bottom: 2px;
+}
+
+.timeline-text {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+.timeline-user {
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+/* Countdown in table */
+.countdown-cell {
+  font-family: 'Inter', monospace;
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+.countdown-cell.overdue {
+  color: var(--status-terlambat);
+  animation: pulse 1.5s infinite;
+}
+
+.countdown-cell.active {
+  color: var(--status-aktif);
+}
+
+/* Responsive */
+@media (max-width: 767px) {
+  .tx-detail-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .price-breakdown {
+    grid-template-columns: 1fr;
+  }
+}

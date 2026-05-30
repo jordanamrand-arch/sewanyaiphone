@@ -1,0 +1,116 @@
+/* ============================================
+   Sewanya iPhone — Log Aktivitas Styles
+   ============================================ */
+
+.log-timeline {
+  position: relative;
+  max-width: 700px;
+}
+
+.log-date-group {
+  margin-bottom: var(--space-xl);
+}
+
+.log-date-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: var(--space-md);
+  padding-bottom: var(--space-sm);
+  border-bottom: 1px solid var(--bg-glass-border);
+}
+
+.log-date-header i {
+  width: 18px;
+  height: 18px;
+  color: var(--accent-start);
+}
+
+.log-entries {
+  position: relative;
+  padding-left: var(--space-xl);
+}
+
+.log-entries::before {
+  content: '';
+  position: absolute;
+  left: 8px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--bg-glass-border);
+}
+
+.log-entry {
+  position: relative;
+  padding: var(--space-md);
+  margin-bottom: var(--space-sm);
+  background: var(--bg-glass);
+  border: 1px solid var(--bg-glass-border);
+  border-radius: var(--radius-md);
+  transition: all var(--transition-fast);
+}
+
+.log-entry:hover {
+  background: var(--bg-card-hover);
+}
+
+.log-entry::before {
+  content: '';
+  position: absolute;
+  left: calc(-1 * var(--space-xl) + 4px);
+  top: 20px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--accent-start);
+  border: 2px solid var(--bg-secondary);
+}
+
+.log-entry-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-xs);
+}
+
+.log-entry-user {
+  font-weight: 600;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.log-entry-user i {
+  width: 14px;
+  height: 14px;
+  color: var(--accent-start);
+}
+
+.log-entry-time {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.log-entry-text {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+/* Filters */
+.log-filters {
+  display: flex;
+  gap: var(--space-md);
+  margin-bottom: var(--space-lg);
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.log-filter-select {
+  min-width: 160px;
+}

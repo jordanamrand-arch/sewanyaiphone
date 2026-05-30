@@ -1,0 +1,39 @@
+/* ============================================
+   Sewanya iPhone — Harga / Pricing Styles
+   ============================================ */
+
+.pricing-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  margin-bottom: var(--space-lg);
+  flex-wrap: wrap;
+}
+
+.pricing-select {
+  min-width: 250px;
+}
+
+.pricing-group {
+  margin-bottom: var(--space-lg);
+}
+
+.pricing-group-title {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: var(--space-sm) var(--space-md);
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: var(--radius-sm);
+  margin-bottom: var(--space-sm);
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.pricing-group-title i {
+  width: 16px;
+  height: 16px;
+}
