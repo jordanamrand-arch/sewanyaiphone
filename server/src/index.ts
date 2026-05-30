@@ -97,14 +97,16 @@ app.use(
 
 // ============ Start Server ============
 
-app.listen(PORT, () => {
-  console.log(`
-╔══════════════════════════════════════════╗
-║   🍎 Sewanya iPhone API Server          ║
-║   Running on http://localhost:${PORT}       ║
-║   Environment: ${process.env.NODE_ENV || 'development'}           ║
-╚══════════════════════════════════════════╝
-  `);
-});
+if (!process.env.VERCEL) {
+  app.listen(PORT, () => {
+    console.log(`
+  ╔══════════════════════════════════════════╗
+  ║   🍎 Sewanya iPhone API Server          ║
+  ║   Running on http://localhost:${PORT}       ║
+  ║   Environment: ${process.env.NODE_ENV || 'development'}           ║
+  ╚══════════════════════════════════════════╝
+    `);
+  });
+}
 
 export default app;

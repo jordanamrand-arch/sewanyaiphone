@@ -2,7 +2,7 @@
 // Sewanya iPhone — REST API + Optimistic Store
 // ============================================
 
-const API_BASE = 'http://localhost:3000/api';
+const API_BASE = '/api';
 
 // Mappers to convert between Frontend (snake_case / custom names) and Backend (camelCase / DB columns)
 const mappers = {
