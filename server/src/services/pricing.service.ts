@@ -22,6 +22,13 @@ interface UpdatePricingData {
 
 export const pricingService = {
   /**
+   * Get all pricing tiers across all iPhones
+   */
+  async getAll() {
+    return db.select().from(pricingTier).orderBy(pricingTier.durationType, pricingTier.duration);
+  },
+
+  /**
    * Get all pricing tiers for an iPhone
    */
   async getByIphone(iphoneId: string) {

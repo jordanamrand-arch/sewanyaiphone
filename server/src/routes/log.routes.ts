@@ -25,4 +25,24 @@ router.get('/', async (req, res) => {
   }
 });
 
+/**
+ * POST /api/logs
+ * Create a new activity log entry
+ */
+router.post('/', async (req, res) => {
+  try {
+    const { activity } = req.body;
+    if (!activity) {
+      res.status(400).json({ error: 'Field activity wajib diisi' });
+      return;
+    }
+
+    const log = await logService.create(req.user!.id, activity);
+    res.status(201).json(log);
+  } catch (error) {
+    console.error('Error creating log:', error);
+    res.status(500).json({ error: 'Gagal membuat log aktivitas' });
+  }
+});
+
 export default router;

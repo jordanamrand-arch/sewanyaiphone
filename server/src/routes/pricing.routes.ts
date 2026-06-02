@@ -17,12 +17,13 @@ const router = Router();
 router.get('/', async (req, res) => {
   try {
     const { iphoneId } = req.query;
-    if (!iphoneId) {
-      res.status(400).json({ error: 'Parameter iphoneId wajib diisi' });
-      return;
+    if (iphoneId) {
+      const pricing = await pricingService.getByIphone(iphoneId as string);
+      res.json(pricing);
+    } else {
+      const allPricing = await pricingService.getAll();
+      res.json(allPricing);
     }
-    const pricing = await pricingService.getByIphone(iphoneId as string);
-    res.json(pricing);
   } catch (error) {
     console.error('Error fetching pricing:', error);
     res.status(500).json({ error: 'Gagal mengambil data harga' });
@@ -37,7 +38,7 @@ router.post('/', async (req, res) => {
   try {
     const { iphoneId, durationType, duration, price } = req.body;
 
-    if (!iphoneId || !durationType || !duration || !price) {
+    if (!iphoneId || !durationType || duration == null || price == null) {
       res.status(400).json({ error: 'Semua field wajib diisi' });
       return;
     }

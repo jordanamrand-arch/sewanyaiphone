@@ -58,12 +58,12 @@ const mappers = {
         tx_number: db.txNumber,
         user_id: db.userId,
         iphone_id: db.iphoneId,
-        customer_name: db.customerName,
-        customer_whatsapp: db.customerWhatsapp,
+        nama_pelanggan: db.customerName,
+        nomor_whatsapp: db.customerWhatsapp,
         tanggal_waktu_mulai: db.startTime,
         tanggal_waktu_selesai: db.endTime,
-        dp_amount: db.dpAmount,
-        settlement_amount: db.settlementAmount,
+        nominal_dp: db.dpAmount,
+        nominal_pelunasan: db.settlementAmount,
         total_harga: db.totalPrice,
         status_pembayaran: db.paymentStatus,
         status_rental: db.rentalStatus,
@@ -74,12 +74,12 @@ const mappers = {
       if (!fe) return null;
       return {
         iphoneId: fe.iphone_id,
-        customerName: fe.customer_name,
-        customerWhatsapp: fe.customer_whatsapp,
+        customerName: fe.nama_pelanggan,
+        customerWhatsapp: fe.nomor_whatsapp,
         startTime: fe.tanggal_waktu_mulai,
         endTime: fe.tanggal_waktu_selesai,
-        dpAmount: Number(fe.dp_amount || 0),
-        settlementAmount: Number(fe.settlement_amount || 0),
+        dpAmount: Number(fe.nominal_dp || 0),
+        settlementAmount: Number(fe.nominal_pelunasan || 0),
         totalPrice: Number(fe.total_harga || 0),
         paymentStatus: fe.status_pembayaran,
         rentalStatus: fe.status_rental,
@@ -102,6 +102,7 @@ const mappers = {
       return {
         name: fe.nama,
         email: fe.email || `${fe.username}@sewanya.com`,
+        password: fe.password,
         role: fe.role,
       };
     }
@@ -119,7 +120,7 @@ const mappers = {
     toBackend(fe) {
       if (!fe) return null;
       return {
-        activity: fe.activity,
+        activity: fe.activity || fe.aktivitas,
       };
     }
   }

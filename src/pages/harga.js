@@ -193,7 +193,8 @@ export function renderHarga() {
       body,
       submitLabel: isEdit ? 'Simpan' : 'Tambah',
       onSubmit: (close) => {
-        const activeJenis = document.querySelector('.toggle-option.active');
+        const modalBody = document.getElementById('modal-body');
+        const activeJenis = modalBody.querySelector('.toggle-option.active');
         const jenis_durasi = activeJenis?.dataset.jenis || 'jam';
         const durasi = Number(document.getElementById('modal-durasi').value);
         const harga = Number(document.getElementById('modal-harga').value);
@@ -227,12 +228,15 @@ export function renderHarga() {
     });
 
     // Toggle
-    document.querySelectorAll('.toggle-option').forEach(opt => {
-      opt.addEventListener('click', () => {
-        document.querySelectorAll('.toggle-option').forEach(o => o.classList.remove('active'));
-        opt.classList.add('active');
+    const modalBody = document.getElementById('modal-body');
+    if (modalBody) {
+      modalBody.querySelectorAll('.toggle-option').forEach(opt => {
+        opt.addEventListener('click', () => {
+          modalBody.querySelectorAll('.toggle-option').forEach(o => o.classList.remove('active'));
+          opt.classList.add('active');
+        });
       });
-    });
+    }
   }
 
   render();
