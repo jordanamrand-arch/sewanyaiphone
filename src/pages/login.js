@@ -22,11 +22,7 @@ export function renderLogin() {
 
       <div class="login-card">
         <div class="login-logo">
-          <div class="login-logo-icon">
-            <i data-lucide="smartphone"></i>
-          </div>
-          <h1 class="login-title">Sewanya iPhone</h1>
-          <p class="login-subtitle">Sistem Manajemen Sewa iPhone</p>
+          <img src="/logo.svg" alt="SewaNya iPhone" class="login-logo-img" />
         </div>
 
         <form class="login-form" id="login-form">

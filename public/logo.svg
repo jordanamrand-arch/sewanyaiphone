@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 280" fill="none">
+  <!-- Phone body -->
+  <rect x="40" y="10" width="120" height="190" rx="22" ry="22" stroke="currentColor" stroke-width="10" fill="none"/>
+  <!-- Phone notch -->
+  <rect x="82" y="10" width="36" height="6" rx="3" fill="currentColor"/>
+  <!-- Phone screen -->
+  <rect x="50" y="30" width="100" height="155" rx="4" fill="rgba(255,255,255,0.05)"/>
+  <!-- Location pin -->
+  <path d="M100 56 C82 56 68 70 68 88 C68 112 100 140 100 140 C100 140 132 112 132 88 C132 70 118 56 100 56Z" fill="currentColor"/>
+  <!-- Pin hole -->
+  <circle cx="100" cy="88" r="14" fill="rgba(10,14,26,1)"/>
+  <!-- SALATIGA text -->
+  <text x="100" y="162" text-anchor="middle" fill="currentColor" font-family="Inter, sans-serif" font-size="14" font-weight="700" letter-spacing="1">SALATIGA</text>
+  <!-- SewaNya text -->
+  <text x="100" y="235" text-anchor="middle" fill="currentColor" font-family="Inter, sans-serif" font-size="30" font-weight="800">SewaNya</text>
+  <!-- iPhone text -->
+  <text x="100" y="265" text-anchor="middle" fill="currentColor" font-family="Inter, sans-serif" font-size="22" font-weight="700">iPhone</text>
+</svg>

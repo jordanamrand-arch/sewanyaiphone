@@ -1,10 +1,10 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-  <defs>
-    <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#6366f1"/>
-      <stop offset="100%" stop-color="#8b5cf6"/>
-    </linearGradient>
-  </defs>
-  <rect width="32" height="32" rx="8" fill="url(#g)"/>
-  <text x="16" y="22" text-anchor="middle" fill="white" font-family="Inter,sans-serif" font-size="16" font-weight="700">Si</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <!-- Phone body -->
+  <rect x="12" y="4" width="40" height="56" rx="8" stroke="#6366f1" stroke-width="4" fill="#0f1729"/>
+  <!-- Phone notch -->
+  <rect x="24" y="4" width="16" height="3" rx="1.5" fill="#6366f1"/>
+  <!-- Location pin -->
+  <path d="M32 18 C24 18 18 24 18 32 C18 42 32 52 32 52 C32 52 46 42 46 32 C46 24 40 18 32 18Z" fill="#6366f1"/>
+  <!-- Pin hole -->
+  <circle cx="32" cy="31" r="6" fill="#0f1729"/>
 </svg>

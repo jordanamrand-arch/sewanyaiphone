@@ -29,10 +29,8 @@ export function renderSidebar(container) {
     <aside class="sidebar ${isCollapsed ? 'collapsed' : ''}" id="sidebar">
       <div class="sidebar-header">
         <div class="sidebar-logo">
-          <div class="logo-icon">
-            <i data-lucide="smartphone"></i>
-          </div>
-          <span class="logo-text">Sewanya iPhone</span>
+          <img src="/logo.svg" alt="SewaNya iPhone" class="sidebar-logo-img" />
+          <span class="logo-text">SewaNya iPhone</span>
         </div>
         <button class="sidebar-toggle" id="sidebar-toggle" title="Toggle Sidebar">
           <i data-lucide="${isCollapsed ? 'chevron-right' : 'chevron-left'}"></i>

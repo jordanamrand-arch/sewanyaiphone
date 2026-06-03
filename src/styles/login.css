@@ -110,37 +110,18 @@
   margin-bottom: var(--space-xl);
 }
 
-.login-logo-icon {
-  width: 64px;
-  height: 64px;
-  background: var(--accent-gradient);
-  border-radius: var(--radius-lg);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  margin-bottom: var(--space-md);
-  box-shadow: 0 8px 24px rgba(99, 102, 241, 0.3);
+/* Logo Image */
+.login-logo-img {
+  width: 160px;
+  height: auto;
+  color: var(--text-primary);
+  filter: drop-shadow(0 4px 20px rgba(99, 102, 241, 0.25));
+  animation: logoFloat 4s ease-in-out infinite alternate;
 }
 
-.login-logo-icon i {
-  width: 32px;
-  height: 32px;
-}
-
-.login-title {
-  font-size: 1.75rem;
-  font-weight: 800;
-  background: var(--accent-gradient);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  margin-bottom: 4px;
-}
-
-.login-subtitle {
-  font-size: 0.9rem;
-  color: var(--text-secondary);
+@keyframes logoFloat {
+  from { transform: translateY(0); }
+  to { transform: translateY(-6px); }
 }
 
 /* Form */
