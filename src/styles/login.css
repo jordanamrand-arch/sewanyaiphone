@@ -114,7 +114,7 @@
 .login-logo-img {
   width: 180px;
   height: auto;
-  filter: brightness(0) invert(1) drop-shadow(0 4px 24px rgba(99, 102, 241, 0.35));
+  filter: var(--logo-filter) drop-shadow(0 4px 24px rgba(99, 102, 241, 0.35));
   animation: logoFloat 4s ease-in-out infinite alternate;
 }
 
@@ -147,4 +147,55 @@
 .login-btn:disabled {
   opacity: 0.6;
   cursor: not-allowed;
+}
+
+/* ---------- Light Theme ---------- */
+[data-theme="light"] .login-page {
+  background: var(--bg-primary);
+}
+
+[data-theme="light"] .login-card {
+  background: rgba(255, 255, 255, 0.9);
+  border-color: rgba(0, 0, 0, 0.08);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+}
+
+[data-theme="light"] .login-bg::before,
+[data-theme="light"] .login-bg::after {
+  opacity: 0.15;
+}
+
+[data-theme="light"] .login-bg-extra {
+  opacity: 0.08;
+}
+
+/* Theme toggle button on login page */
+.login-theme-toggle {
+  position: fixed;
+  top: var(--space-lg);
+  right: var(--space-lg);
+  z-index: 10;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-full);
+  background: var(--bg-glass);
+  border: 1px solid var(--bg-glass-border);
+  backdrop-filter: blur(12px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.login-theme-toggle:hover {
+  background: var(--bg-card-hover);
+  color: var(--text-primary);
+  transform: rotate(15deg) scale(1.05);
+}
+
+.login-theme-toggle i {
+  width: 20px;
+  height: 20px;
 }

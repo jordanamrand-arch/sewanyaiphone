@@ -36,7 +36,13 @@ import { renderPengaturan } from './pages/pengaturan.js';
 import { renderJadwal } from './pages/jadwal.js';
 import { renderLaporan } from './pages/laporan.js';
 
+// Theme
+import { initTheme } from './utils/theme.js';
+
 // ============ Initialize ============
+
+// Init theme from localStorage (before any render to avoid flash)
+initTheme();
 
 // Init store (loads all data from Supabase API)
 await store.init();

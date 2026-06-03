@@ -4,6 +4,7 @@
 
 import { store } from '../store.js';
 import { navigate } from '../router.js';
+import { getTheme, toggleTheme } from '../utils/theme.js';
 
 const NAV_ITEMS = [
   { path: '/dashboard', icon: 'layout-dashboard', label: 'Dashboard' },
@@ -60,6 +61,11 @@ export function renderSidebar(container) {
           </a>
         `
   ).join('')}
+
+        <button class="nav-item theme-toggle-btn" id="theme-toggle-btn" title="Ganti Tema">
+          <i data-lucide="${getTheme() === 'light' ? 'moon' : 'sun'}"></i>
+          <span class="nav-label">${getTheme() === 'light' ? 'Mode Gelap' : 'Mode Terang'}</span>
+        </button>
 
         <button class="nav-item logout-btn" id="logout-btn">
           <i data-lucide="log-out"></i>
@@ -123,6 +129,13 @@ export function renderSidebar(container) {
       sidebar?.classList.remove('mobile-open');
       overlay?.classList.remove('active');
     });
+  });
+
+  // Theme toggle
+  const themeBtn = document.getElementById('theme-toggle-btn');
+  themeBtn?.addEventListener('click', () => {
+    toggleTheme();
+    renderSidebar(container);
   });
 
   // Logout

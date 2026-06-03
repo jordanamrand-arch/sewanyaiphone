@@ -202,8 +202,8 @@ select.form-input {
 }
 
 select.form-input option {
-  background-color: #0f1729;
-  color: #f1f5f9;
+  background-color: var(--bg-secondary);
+  color: var(--text-primary);
 }
 
 .form-row {
@@ -829,4 +829,82 @@ select.form-input option {
 @keyframes skeleton {
   0% { background-position: 200% 0; }
   100% { background-position: -200% 0; }
+}
+
+/* ---------- Light Theme Overrides ---------- */
+[data-theme="light"] .btn::after {
+  background: rgba(0, 0, 0, 0);
+}
+
+[data-theme="light"] .btn:hover::after {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="light"] .btn-primary {
+  box-shadow: 0 4px 15px rgba(99, 102, 241, 0.2);
+}
+
+[data-theme="light"] .btn-secondary {
+  background: var(--bg-secondary);
+  border-color: var(--bg-glass-border);
+}
+
+[data-theme="light"] .btn-secondary:hover {
+  background: var(--bg-tertiary);
+}
+
+[data-theme="light"] .btn-ghost:hover {
+  background: var(--bg-glass);
+}
+
+[data-theme="light"] .data-table thead {
+  background: var(--bg-tertiary);
+}
+
+[data-theme="light"] .data-table td {
+  border-bottom-color: var(--bg-glass-border);
+}
+
+[data-theme="light"] .data-table tbody tr:hover {
+  background: rgba(99, 102, 241, 0.03);
+}
+
+[data-theme="light"] .data-table tbody tr.row-danger {
+  background: rgba(239, 68, 68, 0.04);
+}
+
+[data-theme="light"] .filter-tab:hover {
+  background: rgba(0, 0, 0, 0.04);
+}
+
+[data-theme="light"] .modal-overlay,
+[data-theme="light"] .confirm-overlay {
+  background: rgba(0, 0, 0, 0.35);
+}
+
+[data-theme="light"] .modal-content,
+[data-theme="light"] .confirm-box {
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+}
+
+[data-theme="light"] .toast {
+  background: var(--bg-secondary);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+}
+
+[data-theme="light"] .settings-tab:hover {
+  background: rgba(0, 0, 0, 0.04);
+}
+
+[data-theme="light"] .skeleton {
+  background: linear-gradient(90deg, var(--bg-glass) 25%, rgba(0, 0, 0, 0.04) 50%, var(--bg-glass) 75%);
+  background-size: 200% 100%;
+}
+
+[data-theme="light"] .nav-item:hover {
+  background: rgba(0, 0, 0, 0.04);
+}
+
+[data-theme="light"] .toggle-option:hover {
+  background: rgba(0, 0, 0, 0.04);
 }

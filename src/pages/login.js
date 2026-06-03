@@ -5,6 +5,7 @@
 import { store } from '../store.js';
 import { navigate } from '../router.js';
 import { showToast } from '../components/toast.js';
+import { getTheme, toggleTheme } from '../utils/theme.js';
 
 export function renderLogin() {
   // If already logged in, redirect
@@ -61,16 +62,23 @@ export function renderLogin() {
           </button>
         </form>
 
-        <div style="margin-top: var(--space-lg); text-align: center;">
-          <p style="font-size: 0.75rem; color: var(--text-muted);">
-            Demo: admin / admin123
-          </p>
-        </div>
+
       </div>
+
+      <!-- Theme toggle -->
+      <button class="login-theme-toggle" id="login-theme-toggle" title="Ganti Tema">
+        <i data-lucide="${getTheme() === 'light' ? 'moon' : 'sun'}"></i>
+      </button>
     </div>
   `;
 
   if (window.lucide) lucide.createIcons();
+
+  // Theme toggle on login page
+  document.getElementById('login-theme-toggle')?.addEventListener('click', () => {
+    toggleTheme();
+    renderLogin();
+  });
 
   // Toggle password visibility
   const toggleBtn = document.getElementById('toggle-password');
