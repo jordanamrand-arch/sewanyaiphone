@@ -72,7 +72,8 @@
 .sidebar-logo-img {
   width: 36px;
   height: 36px;
-  color: var(--text-primary);
+  object-fit: contain;
+  filter: brightness(0) invert(1);
   flex-shrink: 0;
 }
 

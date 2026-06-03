@@ -22,7 +22,7 @@ export function renderLogin() {
 
       <div class="login-card">
         <div class="login-logo">
-          <img src="/logo.svg" alt="SewaNya iPhone" class="login-logo-img" />
+          <img src="/logo.png" alt="SewaNya iPhone" class="login-logo-img" />
         </div>
 
         <form class="login-form" id="login-form">

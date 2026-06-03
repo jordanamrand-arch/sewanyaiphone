@@ -112,10 +112,9 @@
 
 /* Logo Image */
 .login-logo-img {
-  width: 160px;
+  width: 180px;
   height: auto;
-  color: var(--text-primary);
-  filter: drop-shadow(0 4px 20px rgba(99, 102, 241, 0.25));
+  filter: brightness(0) invert(1) drop-shadow(0 4px 24px rgba(99, 102, 241, 0.35));
   animation: logoFloat 4s ease-in-out infinite alternate;
 }
 

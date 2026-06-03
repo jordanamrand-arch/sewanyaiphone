@@ -29,7 +29,7 @@ export function renderSidebar(container) {
     <aside class="sidebar ${isCollapsed ? 'collapsed' : ''}" id="sidebar">
       <div class="sidebar-header">
         <div class="sidebar-logo">
-          <img src="/logo.svg" alt="SewaNya iPhone" class="sidebar-logo-img" />
+          <img src="/logo.png" alt="SewaNya iPhone" class="sidebar-logo-img" />
           <span class="logo-text">SewaNya iPhone</span>
         </div>
         <button class="sidebar-toggle" id="sidebar-toggle" title="Toggle Sidebar">
