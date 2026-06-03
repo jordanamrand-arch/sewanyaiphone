@@ -113,7 +113,7 @@ const mappers = {
       return {
         id: db.id,
         user_id: db.userId,
-        activity: db.activity,
+        aktivitas: db.activity,
         created_at: db.createdAt,
       };
     },

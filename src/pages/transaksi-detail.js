@@ -52,7 +52,7 @@ export function renderTransaksiDetail(params) {
 
     // Get related logs
     const logs = store.getLogs().filter(l =>
-      l.aktivitas.includes(tx.tx_number)
+      (l.aktivitas || '').includes(tx.tx_number)
     ).slice(0, 10);
 
     mainContent.innerHTML = `
@@ -174,7 +174,7 @@ export function renderTransaksiDetail(params) {
                 <div class="timeline-item">
                   <div class="timeline-time">${formatDateTime(log.created_at)}</div>
                   <div class="timeline-text">
-                    <span class="timeline-user">${logUser?.nama || 'System'}</span> — ${log.aktivitas}
+                    <span class="timeline-user">${logUser?.nama || 'System'}</span> — ${log.aktivitas || ''}
                   </div>
                 </div>
               `;

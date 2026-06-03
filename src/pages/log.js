@@ -78,7 +78,7 @@ export function renderLog() {
                           </span>
                           <span class="log-entry-time">${time}</span>
                         </div>
-                        <p class="log-entry-text">${log.aktivitas}</p>
+                        <p class="log-entry-text">${log.aktivitas || ''}</p>
                       </div>
                     `;
     }).join('')}

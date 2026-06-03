@@ -58,8 +58,8 @@ export function renderTransaksiList() {
       transactions = transactions.filter(t => {
         const iphone = store.getIphoneById(t.iphone_id);
         return (
-          t.tx_number.toLowerCase().includes(q) ||
-          t.nama_pelanggan.toLowerCase().includes(q) ||
+          (t.tx_number || '').toLowerCase().includes(q) ||
+          (t.nama_pelanggan || '').toLowerCase().includes(q) ||
           (iphone?.model || '').toLowerCase().includes(q)
         );
       });
