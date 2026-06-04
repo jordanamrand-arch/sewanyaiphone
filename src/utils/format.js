@@ -221,7 +221,7 @@ export function exportToCSV(data, filename) {
   const csvRows = [];
   
   // Add headers
-  csvRows.push(headers.map(h => `"${h}"`).join(','));
+  csvRows.push(headers.map(h => `"${h}"`).join(';'));
   
   // Add rows
   for (const row of data) {
@@ -230,10 +230,12 @@ export function exportToCSV(data, filename) {
       const escaped = ('' + (val || '')).replace(/"/g, '""');
       return `"${escaped}"`;
     });
-    csvRows.push(values.join(','));
+    csvRows.push(values.join(';'));
   }
   
-  const blob = new Blob([csvRows.join('\\n')], { type: 'text/csv' });
+  // Add UTF-8 BOM for Excel compatibility
+  const bom = new Uint8Array([0xEF, 0xBB, 0xBF]);
+  const blob = new Blob([bom, csvRows.join('\n')], { type: 'text/csv;charset=utf-8' });
   const url = window.URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.setAttribute('href', url);
