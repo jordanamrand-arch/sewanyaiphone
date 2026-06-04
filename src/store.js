@@ -20,13 +20,15 @@ const mappers = {
     },
     toBackend(fe) {
       if (!fe) return null;
-      return {
+      const be = {
         model: fe.model,
         serialNumber: fe.nomor_seri,
         color: fe.warna,
-        batteryHealth: Number(fe.battery_health),
+        batteryHealth: fe.battery_health !== undefined ? Number(fe.battery_health) : undefined,
         physicalStatus: fe.status_fisik,
       };
+      Object.keys(be).forEach(key => be[key] === undefined && delete be[key]);
+      return be;
     }
   },
   pricing: {
@@ -42,12 +44,14 @@ const mappers = {
     },
     toBackend(fe) {
       if (!fe) return null;
-      return {
+      const be = {
         iphoneId: fe.iphone_id,
         durationType: fe.jenis_durasi,
-        duration: Number(fe.durasi),
-        price: Number(fe.harga),
+        duration: fe.durasi !== undefined ? Number(fe.durasi) : undefined,
+        price: fe.harga !== undefined ? Number(fe.harga) : undefined,
       };
+      Object.keys(be).forEach(key => be[key] === undefined && delete be[key]);
+      return be;
     }
   },
   transaction: {
@@ -72,18 +76,20 @@ const mappers = {
     },
     toBackend(fe) {
       if (!fe) return null;
-      return {
+      const be = {
         iphoneId: fe.iphone_id,
         customerName: fe.nama_pelanggan,
         customerWhatsapp: fe.nomor_whatsapp,
         startTime: fe.tanggal_waktu_mulai,
         endTime: fe.tanggal_waktu_selesai,
-        dpAmount: Number(fe.nominal_dp || 0),
-        settlementAmount: Number(fe.nominal_pelunasan || 0),
-        totalPrice: Number(fe.total_harga || 0),
+        dpAmount: fe.nominal_dp !== undefined ? Number(fe.nominal_dp) : undefined,
+        settlementAmount: fe.nominal_pelunasan !== undefined ? Number(fe.nominal_pelunasan) : undefined,
+        totalPrice: fe.total_harga !== undefined ? Number(fe.total_harga) : undefined,
         paymentStatus: fe.status_pembayaran,
         rentalStatus: fe.status_rental,
       };
+      Object.keys(be).forEach(key => be[key] === undefined && delete be[key]);
+      return be;
     }
   },
   user: {
