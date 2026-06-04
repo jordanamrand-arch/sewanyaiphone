@@ -60,6 +60,19 @@ export function formatDateInput(date) {
 }
 
 /**
+ * Format date untuk nama file (YYYYMMDD_HHMMSS)
+ * @param {string|Date} date 
+ * @returns {string}
+ */
+export function formatDateForFileName(date) {
+  if (!date) return '';
+  const d = new Date(date);
+  if (isNaN(d.getTime())) return '';
+  const pad = n => String(n).padStart(2, '0');
+  return `${d.getFullYear()}${pad(d.getMonth() + 1)}${pad(d.getDate())}_${pad(d.getHours())}${pad(d.getMinutes())}${pad(d.getSeconds())}`;
+}
+
+/**
  * Format date ke datetime-local input value
  * @param {string|Date} date
  * @returns {string}
@@ -176,4 +189,55 @@ export function formatDurasi(jenis, durasi) {
 export function truncate(str, max = 30) {
   if (!str) return '';
   return str.length > max ? str.slice(0, max) + '...' : str;
+}
+
+/**
+ * Hitung durasi (selisih hari/jam) antara dua tanggal
+ * @param {string|Date} startDate
+ * @param {string|Date} endDate
+ * @returns {string}
+ */
+export function calculateDurationString(startDate, endDate) {
+  if (!startDate || !endDate) return '-';
+  const start = new Date(startDate);
+  const end = new Date(endDate);
+  const diffMs = Math.abs(end - start);
+  const diffHours = Math.round(diffMs / (1000 * 60 * 60));
+  
+  if (diffHours >= 24 && diffHours % 24 === 0) {
+    return `${diffHours / 24} Hari`;
+  }
+  return `${diffHours} Jam`;
+}
+
+/**
+ * Download CSV file
+ * @param {Array<Object>} data 
+ * @param {string} filename 
+ */
+export function exportToCSV(data, filename) {
+  if (!data || !data.length) return;
+  const headers = Object.keys(data[0]);
+  const csvRows = [];
+  
+  // Add headers
+  csvRows.push(headers.map(h => `"${h}"`).join(','));
+  
+  // Add rows
+  for (const row of data) {
+    const values = headers.map(header => {
+      const val = row[header];
+      const escaped = ('' + (val || '')).replace(/"/g, '""');
+      return `"${escaped}"`;
+    });
+    csvRows.push(values.join(','));
+  }
+  
+  const blob = new Blob([csvRows.join('\\n')], { type: 'text/csv' });
+  const url = window.URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.setAttribute('href', url);
+  a.setAttribute('download', filename);
+  a.click();
+  window.URL.revokeObjectURL(url);
 }

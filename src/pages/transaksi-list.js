@@ -3,7 +3,7 @@
 // ============================================
 
 import { store } from '../store.js';
-import { formatRupiah, formatDateTime, getWhatsAppUrl } from '../utils/format.js';
+import { formatRupiah, formatDateTime, getWhatsAppUrl, calculateDurationString, exportToCSV, formatDateForFileName } from '../utils/format.js';
 import { navigate } from '../router.js';
 import { showToast } from '../components/toast.js';
 import { showConfirm } from '../components/confirm-dialog.js';
@@ -76,6 +76,10 @@ export function renderTransaksiList() {
             <i data-lucide="clipboard-list"></i>
             Transaksi
           </h1>
+          <button class="btn btn-secondary" id="export-csv-btn">
+            <i data-lucide="download"></i>
+            Export CSV
+          </button>
           <button class="btn btn-primary" id="new-tx-btn">
             <i data-lucide="plus"></i>
             Transaksi Baru
@@ -127,11 +131,11 @@ export function renderTransaksiList() {
                           </a>
                         </div>
                       </td>
-                      <td>${iphone?.model || '-'}</td>
+                      <td>${iphone?.model || '-'} <br/> <span style="font-size: 0.8rem; color: var(--text-muted);">${iphone?.warna || '-'}</span></td>
                       <td>
                         <div style="font-size: 0.8rem; line-height: 1.5;">
                           ${formatDateTime(tx.tanggal_waktu_mulai)}<br/>
-                          <span style="color: var(--text-muted);">→ ${formatDateTime(tx.tanggal_waktu_selesai)}</span>
+                          <span style="color: var(--text-muted);">→ ${formatDateTime(tx.tanggal_waktu_selesai)} (${calculateDurationString(tx.tanggal_waktu_mulai, tx.tanggal_waktu_selesai)})</span>
                         </div>
                       </td>
                       <td><strong>${formatRupiah(tx.total_harga)}</strong></td>
@@ -177,6 +181,39 @@ export function renderTransaksiList() {
 
   function bindEvents() {
     document.getElementById('new-tx-btn')?.addEventListener('click', () => navigate('/transaksi/baru'));
+
+    document.getElementById('export-csv-btn')?.addEventListener('click', () => {
+      let exportData = store.getTransactions().sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+      
+      // Apply filters if needed
+      if (activeFilter !== 'semua') {
+        exportData = exportData.filter(t => t.status_rental === activeFilter);
+      }
+      
+      const csvData = exportData.map(tx => {
+        const iphone = store.getIphoneById(tx.iphone_id) || {};
+        return {
+          'ID Transaksi': tx.tx_number,
+          'Tanggal Dibuat': formatDateTime(tx.created_at),
+          'Nama Pelanggan': tx.nama_pelanggan,
+          'Nomor WhatsApp': tx.nomor_whatsapp,
+          'Model iPhone': iphone.model || '-',
+          'Warna iPhone': iphone.warna || '-',
+          'Waktu Mulai': formatDateTime(tx.tanggal_waktu_mulai),
+          'Waktu Selesai': formatDateTime(tx.tanggal_waktu_selesai),
+          'Durasi Sewa': calculateDurationString(tx.tanggal_waktu_mulai, tx.tanggal_waktu_selesai),
+          'Status Rental': STATUS_RENTAL_LABELS[tx.status_rental] || tx.status_rental,
+          'Status Pembayaran': STATUS_BAYAR_LABELS[tx.status_pembayaran] || tx.status_pembayaran,
+          'Total Harga': tx.total_harga,
+          'DP': tx.nominal_dp,
+          'Sisa Pelunasan': tx.nominal_pelunasan
+        };
+      });
+      
+      exportToCSV(csvData, `Data_Transaksi_${formatDateForFileName(new Date())}.csv`);
+      showToast('Data berhasil diexport ke CSV', 'success');
+      logActivity('Melakukan export data transaksi ke CSV');
+    });
 
     document.getElementById('tx-search')?.addEventListener('input', (e) => {
       search = e.target.value;

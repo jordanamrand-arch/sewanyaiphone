@@ -3,7 +3,7 @@
 // ============================================
 
 import { store } from '../store.js';
-import { formatRupiah, formatDateTime, getCountdown, getWhatsAppUrl } from '../utils/format.js';
+import { formatRupiah, formatDateTime, getCountdown, getWhatsAppUrl, calculateDurationString, exportToCSV, formatDateForFileName } from '../utils/format.js';
 import { navigate } from '../router.js';
 import { showToast } from '../components/toast.js';
 import { showModal } from '../components/modal.js';
@@ -77,6 +77,10 @@ export function renderTransaksiDetail(params) {
 
         <!-- Action Buttons -->
         <div class="tx-detail-actions">
+          <button class="btn btn-secondary" id="export-csv-btn">
+            <i data-lucide="download"></i>
+            Export CSV
+          </button>
           <button class="btn btn-secondary" id="update-rental-btn">
             <i data-lucide="refresh-cw"></i>
             Update Status Rental
@@ -135,6 +139,10 @@ export function renderTransaksiDetail(params) {
               <span class="value">${formatDateTime(tx.tanggal_waktu_selesai)}</span>
             </div>
             <div class="tx-detail-row">
+              <span class="label">Durasi Sewa</span>
+              <span class="value"><strong>${calculateDurationString(tx.tanggal_waktu_mulai, tx.tanggal_waktu_selesai)}</strong></span>
+            </div>
+            <div class="tx-detail-row">
               <span class="label">Dibuat oleh</span>
               <span class="value">${user?.nama || '-'}</span>
             </div>
@@ -190,6 +198,30 @@ export function renderTransaksiDetail(params) {
 
     // Back
     document.getElementById('back-btn')?.addEventListener('click', () => navigate('/transaksi'));
+
+    // Export CSV
+    document.getElementById('export-csv-btn')?.addEventListener('click', () => {
+      const csvData = [{
+        'ID Transaksi': tx.tx_number,
+        'Tanggal Dibuat': formatDateTime(tx.created_at),
+        'Nama Pelanggan': tx.nama_pelanggan,
+        'Nomor WhatsApp': tx.nomor_whatsapp,
+        'Model iPhone': iphone?.model || '-',
+        'Warna iPhone': iphone?.warna || '-',
+        'Waktu Mulai': formatDateTime(tx.tanggal_waktu_mulai),
+        'Waktu Selesai': formatDateTime(tx.tanggal_waktu_selesai),
+        'Durasi Sewa': calculateDurationString(tx.tanggal_waktu_mulai, tx.tanggal_waktu_selesai),
+        'Status Rental': STATUS_RENTAL_LABELS[tx.status_rental] || tx.status_rental,
+        'Status Pembayaran': STATUS_BAYAR_LABELS[tx.status_pembayaran] || tx.status_pembayaran,
+        'Total Harga': tx.total_harga,
+        'DP': tx.nominal_dp,
+        'Sisa Pelunasan': tx.nominal_pelunasan
+      }];
+      
+      exportToCSV(csvData, `Transaksi_${tx.tx_number}_${formatDateForFileName(new Date())}.csv`);
+      showToast('Data transaksi berhasil diexport', 'success');
+      logActivity(`Melakukan export data transaksi ${tx.tx_number} ke CSV`);
+    });
 
     // Update Rental Status
     document.getElementById('update-rental-btn')?.addEventListener('click', () => {
