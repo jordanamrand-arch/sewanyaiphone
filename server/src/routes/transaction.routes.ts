@@ -103,6 +103,8 @@ router.post('/', async (req, res) => {
       dpAmount,
       settlementAmount,
       totalPrice,
+      penaltyAmount,
+      penaltyNote,
       paymentStatus,
       rentalStatus,
     } = req.body;
@@ -136,6 +138,8 @@ router.post('/', async (req, res) => {
       dpAmount: dpAmount || 0,
       settlementAmount: settlementAmount || 0,
       totalPrice,
+      penaltyAmount: penaltyAmount || 0,
+      penaltyNote: penaltyNote || null,
       paymentStatus: paymentStatus || 'menunggu_dp',
       rentalStatus: rentalStatus || 'booking',
     });
@@ -184,6 +188,22 @@ router.put('/:id', async (req, res) => {
         req.user!.id,
         `Mengubah status pembayaran ${existing.txNumber} dari ${oldLabel} menjadi ${newLabel}`
       );
+    }
+
+    // Log penalty changes
+    if (req.body.penaltyAmount !== undefined && req.body.penaltyAmount !== existing.penaltyAmount) {
+      const note = req.body.penaltyNote ? ` — Keterangan: ${req.body.penaltyNote}` : '';
+      if (req.body.penaltyAmount > 0) {
+        await logService.create(
+          req.user!.id,
+          `Mengubah denda ${existing.txNumber} menjadi Rp ${Number(req.body.penaltyAmount).toLocaleString('id-ID')}${note}`
+        );
+      } else {
+        await logService.create(
+          req.user!.id,
+          `Menghapus denda pada transaksi ${existing.txNumber}`
+        );
+      }
     }
 
     res.json(updated);

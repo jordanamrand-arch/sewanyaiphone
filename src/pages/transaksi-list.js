@@ -138,7 +138,15 @@ export function renderTransaksiList() {
                           <span style="color: var(--text-muted);">→ ${formatDateTime(tx.tanggal_waktu_selesai)} (${calculateDurationString(tx.tanggal_waktu_mulai, tx.tanggal_waktu_selesai)})</span>
                         </div>
                       </td>
-                      <td><strong>${formatRupiah(tx.total_harga)}</strong></td>
+                      <td>
+                        <strong>${formatRupiah(tx.total_harga)}</strong>
+                        ${tx.denda > 0 ? `
+                          <div class="penalty-indicator">
+                            <i data-lucide="alert-triangle" style="width: 12px; height: 12px;"></i>
+                            +${formatRupiah(tx.denda)}
+                          </div>
+                        ` : ''}
+                      </td>
                       <td><span class="badge badge-${STATUS_BAYAR_BADGE[tx.status_pembayaran]}">${STATUS_BAYAR_LABELS[tx.status_pembayaran]}</span></td>
                       <td><span class="badge badge-${STATUS_RENTAL_BADGE[tx.status_rental]}">${STATUS_RENTAL_LABELS[tx.status_rental]}</span></td>
                       <td class="td-actions">
@@ -206,7 +214,10 @@ export function renderTransaksiList() {
           'Status Pembayaran': STATUS_BAYAR_LABELS[tx.status_pembayaran] || tx.status_pembayaran,
           'Total Harga': tx.total_harga,
           'DP': tx.nominal_dp,
-          'Sisa Pelunasan': tx.nominal_pelunasan
+          'Sisa Pelunasan': tx.nominal_pelunasan,
+          'Denda': tx.denda || 0,
+          'Keterangan Denda': tx.keterangan_denda || '-',
+          'Grand Total': tx.total_harga + (tx.denda || 0)
         };
       });
       

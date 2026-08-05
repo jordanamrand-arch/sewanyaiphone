@@ -69,6 +69,8 @@ const mappers = {
         nominal_dp: db.dpAmount,
         nominal_pelunasan: db.settlementAmount,
         total_harga: db.totalPrice,
+        denda: db.penaltyAmount,
+        keterangan_denda: db.penaltyNote,
         status_pembayaran: db.paymentStatus,
         status_rental: db.rentalStatus,
         created_at: db.createdAt,
@@ -85,6 +87,8 @@ const mappers = {
         dpAmount: fe.nominal_dp !== undefined ? Number(fe.nominal_dp) : undefined,
         settlementAmount: fe.nominal_pelunasan !== undefined ? Number(fe.nominal_pelunasan) : undefined,
         totalPrice: fe.total_harga !== undefined ? Number(fe.total_harga) : undefined,
+        penaltyAmount: fe.denda !== undefined ? Number(fe.denda) : undefined,
+        penaltyNote: fe.keterangan_denda,
         paymentStatus: fe.status_pembayaran,
         rentalStatus: fe.status_rental,
       };

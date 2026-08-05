@@ -234,3 +234,65 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* ---- Penalty / Denda Styles ---- */
+
+/* Divider sebelum section denda */
+.penalty-divider {
+  border-top: 1px dashed rgba(239, 68, 68, 0.3);
+  margin: var(--space-sm) 0;
+}
+
+/* Baris denda — teks merah dengan highlight */
+.penalty-row .label {
+  color: var(--status-terlambat) !important;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-weight: 500;
+}
+
+.penalty-amount {
+  color: var(--status-terlambat) !important;
+  font-weight: 700 !important;
+  -webkit-text-fill-color: var(--status-terlambat) !important;
+}
+
+/* Grand Total row — border atas dan font lebih besar */
+.penalty-total-row {
+  border-top: 1px solid var(--bg-glass-border) !important;
+  padding-top: var(--space-md) !important;
+  margin-top: var(--space-xs);
+}
+
+.penalty-grand-total {
+  font-size: 1.1rem;
+  background: var(--accent-gradient) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+}
+
+/* Indikator denda di tabel list */
+.penalty-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 0.75rem;
+  color: var(--status-terlambat);
+  font-weight: 600;
+  margin-top: 2px;
+  animation: penaltyPulse 2s ease-in-out infinite;
+}
+
+@keyframes penaltyPulse {
+  0%, 100% { opacity: 0.7; }
+  50% { opacity: 1; }
+}
+
+/* Badge denda */
+.badge-denda {
+  background: var(--status-terlambat-bg);
+  color: var(--status-terlambat);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+}

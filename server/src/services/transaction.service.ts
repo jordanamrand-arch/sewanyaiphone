@@ -28,6 +28,8 @@ interface CreateTransactionData {
   dpAmount: number;
   settlementAmount: number;
   totalPrice: number;
+  penaltyAmount?: number;
+  penaltyNote?: string;
   paymentStatus: 'menunggu_dp' | 'sudah_dp' | 'lunas';
   rentalStatus: 'booking' | 'aktif_disewa' | 'selesai' | 'terlambat';
 }
@@ -40,6 +42,8 @@ interface UpdateTransactionData {
   dpAmount?: number;
   settlementAmount?: number;
   totalPrice?: number;
+  penaltyAmount?: number;
+  penaltyNote?: string;
   paymentStatus?: 'menunggu_dp' | 'sudah_dp' | 'lunas';
   rentalStatus?: 'booking' | 'aktif_disewa' | 'selesai' | 'terlambat';
 }
@@ -100,6 +104,8 @@ export const transactionService = {
         dpAmount: transaction.dpAmount,
         settlementAmount: transaction.settlementAmount,
         totalPrice: transaction.totalPrice,
+        penaltyAmount: transaction.penaltyAmount,
+        penaltyNote: transaction.penaltyNote,
         paymentStatus: transaction.paymentStatus,
         rentalStatus: transaction.rentalStatus,
         createdAt: transaction.createdAt,
@@ -142,6 +148,8 @@ export const transactionService = {
         dpAmount: transaction.dpAmount,
         settlementAmount: transaction.settlementAmount,
         totalPrice: transaction.totalPrice,
+        penaltyAmount: transaction.penaltyAmount,
+        penaltyNote: transaction.penaltyNote,
         paymentStatus: transaction.paymentStatus,
         rentalStatus: transaction.rentalStatus,
         createdAt: transaction.createdAt,
@@ -200,6 +208,8 @@ export const transactionService = {
         dpAmount: data.dpAmount,
         settlementAmount: data.settlementAmount,
         totalPrice: data.totalPrice,
+        penaltyAmount: data.penaltyAmount || 0,
+        penaltyNote: data.penaltyNote || null,
         paymentStatus: data.paymentStatus,
         rentalStatus: data.rentalStatus,
       })

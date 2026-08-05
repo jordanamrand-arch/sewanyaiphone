@@ -93,6 +93,10 @@ export function renderTransaksiDetail(params) {
             <i data-lucide="message-circle"></i>
             Chat WhatsApp
           </a>
+          <button class="btn btn-secondary" id="manage-penalty-btn" style="color: var(--status-terlambat);">
+            <i data-lucide="alert-triangle"></i>
+            Kelola Denda
+          </button>
         </div>
 
         <!-- Detail Grid -->
@@ -163,6 +167,26 @@ export function renderTransaksiDetail(params) {
               <span class="label">Sisa</span>
               <span class="value">${formatRupiah(tx.nominal_pelunasan)}</span>
             </div>
+            ${tx.denda > 0 ? `
+              <div class="penalty-divider"></div>
+              <div class="tx-detail-row penalty-row">
+                <span class="label">
+                  <i data-lucide="alert-triangle" style="width: 14px; height: 14px;"></i>
+                  Denda
+                </span>
+                <span class="value penalty-amount">${formatRupiah(tx.denda)}</span>
+              </div>
+              ${tx.keterangan_denda ? `
+                <div class="tx-detail-row">
+                  <span class="label">Keterangan</span>
+                  <span class="value" style="font-size: 0.85rem; color: var(--text-secondary);">${tx.keterangan_denda}</span>
+                </div>
+              ` : ''}
+              <div class="tx-detail-row penalty-total-row">
+                <span class="label"><strong>Grand Total</strong></span>
+                <span class="value penalty-grand-total"><strong>${formatRupiah(tx.total_harga + tx.denda)}</strong></span>
+              </div>
+            ` : ''}
           </div>
         </div>
 
@@ -215,7 +239,10 @@ export function renderTransaksiDetail(params) {
         'Status Pembayaran': STATUS_BAYAR_LABELS[tx.status_pembayaran] || tx.status_pembayaran,
         'Total Harga': tx.total_harga,
         'DP': tx.nominal_dp,
-        'Sisa Pelunasan': tx.nominal_pelunasan
+        'Sisa Pelunasan': tx.nominal_pelunasan,
+        'Denda': tx.denda || 0,
+        'Keterangan Denda': tx.keterangan_denda || '-',
+        'Grand Total': tx.total_harga + (tx.denda || 0)
       }];
       
       exportToCSV(csvData, `Transaksi_${tx.tx_number}_${formatDateForFileName(new Date())}.csv`);
@@ -289,6 +316,56 @@ export function renderTransaksiDetail(params) {
           close();
           render();
         },
+      });
+    });
+
+    // Manage Penalty
+    document.getElementById('manage-penalty-btn')?.addEventListener('click', () => {
+      const body = `
+        <div class="form-group">
+          <label class="form-label">Nominal Denda (Rp)</label>
+          <input type="number" class="form-input" id="modal-penalty-amount" value="${tx.denda || 0}" min="0" placeholder="0" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Keterangan Denda</label>
+          <textarea class="form-input" id="modal-penalty-note" rows="3" placeholder="Contoh: Terlambat 3 jam, kerusakan minor, dll.">${tx.keterangan_denda || ''}</textarea>
+        </div>
+        <div class="price-display" style="margin-top: var(--space-md);">
+          <div class="price-label">Preview Grand Total</div>
+          <div class="price-value" id="penalty-preview">${formatRupiah(tx.total_harga + (tx.denda || 0))}</div>
+        </div>
+      `;
+      showModal({
+        title: 'Kelola Denda',
+        body,
+        onSubmit: (close) => {
+          const penaltyAmount = Number(document.getElementById('modal-penalty-amount').value) || 0;
+          const penaltyNote = document.getElementById('modal-penalty-note').value.trim();
+
+          store.updateTransaction(tx.id, {
+            denda: penaltyAmount,
+            keterangan_denda: penaltyNote || null,
+          });
+
+          if (penaltyAmount > 0) {
+            logActivity(`Mengubah denda ${tx.tx_number} menjadi ${formatRupiah(penaltyAmount)}${penaltyNote ? ' — ' + penaltyNote : ''}`);
+            showToast(`Denda ${formatRupiah(penaltyAmount)} berhasil disimpan`, 'success');
+          } else {
+            logActivity(`Menghapus denda pada transaksi ${tx.tx_number}`);
+            showToast('Denda berhasil dihapus', 'success');
+          }
+          close();
+          render();
+        },
+      });
+
+      // Live preview grand total
+      document.getElementById('modal-penalty-amount')?.addEventListener('input', (e) => {
+        const preview = document.getElementById('penalty-preview');
+        if (preview) {
+          const penalty = Number(e.target.value) || 0;
+          preview.textContent = formatRupiah(tx.total_harga + penalty);
+        }
       });
     });
 
