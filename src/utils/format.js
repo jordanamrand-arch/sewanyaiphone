@@ -86,6 +86,26 @@ export function formatDateTimeInput(date) {
 }
 
 /**
+ * Convert datetime-local input value to ISO string with timezone offset.
+ * This prevents timezone shift when the server parses the date.
+ * e.g. "2026-08-12T17:00" → "2026-08-12T17:00:00+07:00"
+ * @param {string} dateTimeLocalValue - Value from datetime-local input
+ * @returns {string} ISO string with timezone offset
+ */
+export function toLocalISOString(dateTimeLocalValue) {
+  if (!dateTimeLocalValue) return '';
+  const d = new Date(dateTimeLocalValue);
+  if (isNaN(d.getTime())) return dateTimeLocalValue;
+  const tzOffset = -d.getTimezoneOffset();
+  const sign = tzOffset >= 0 ? '+' : '-';
+  const absOffset = Math.abs(tzOffset);
+  const hh = String(Math.floor(absOffset / 60)).padStart(2, '0');
+  const mm = String(absOffset % 60).padStart(2, '0');
+  const pad = n => String(n).padStart(2, '0');
+  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}${sign}${hh}:${mm}`;
+}
+
+/**
  * Format relative time (waktu relatif)
  * @param {string|Date} date
  * @returns {string}

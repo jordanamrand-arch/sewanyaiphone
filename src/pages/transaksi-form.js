@@ -3,7 +3,7 @@
 // ============================================
 
 import { store } from '../store.js';
-import { formatRupiah, formatDateTimeInput } from '../utils/format.js';
+import { formatRupiah, formatDateTimeInput, toLocalISOString } from '../utils/format.js';
 import { navigate } from '../router.js';
 import { showToast } from '../components/toast.js';
 import { logActivity } from '../utils/activity-logger.js';
@@ -283,8 +283,8 @@ export function renderTransaksiForm() {
         iphone_id,
         nama_pelanggan: nama,
         nomor_whatsapp: wa,
-        tanggal_waktu_mulai: startVal,
-        tanggal_waktu_selesai: endVal,
+        tanggal_waktu_mulai: toLocalISOString(startVal),
+        tanggal_waktu_selesai: toLocalISOString(endVal),
         nominal_dp: dp,
         nominal_pelunasan: Math.max(0, selectedPrice - dp),
         total_harga: selectedPrice,
