@@ -572,7 +572,7 @@ export const store = {
         const created = new Date(t.created_at);
         return created >= monthStart && t.status_pembayaran !== 'menunggu_dp';
       })
-      .reduce((sum, t) => sum + (t.total_harga || 0), 0);
+      .reduce((sum, t) => sum + (t.total_harga || 0) + (t.denda || 0), 0);
 
     const transaksiAktif = transactions.filter(
       (t) => t.status_rental === 'aktif_disewa' || t.status_rental === 'terlambat'

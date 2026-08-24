@@ -34,7 +34,7 @@ export function renderLaporan() {
     if (tx.status_rental === 'selesai') {
       data.totalSelesai++;
     }
-    data.totalPendapatan += (tx.total_harga || 0);
+    data.totalPendapatan += (tx.total_harga || 0) + (tx.denda || 0);
     data.unitDisewa.add(tx.iphone_id);
   });
   

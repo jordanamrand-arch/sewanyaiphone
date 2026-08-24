@@ -201,7 +201,7 @@ function initRevenueChart() {
     if (diffDays <= 28) {
       const weekIndex = 3 - Math.floor(diffDays / 7);
       if (weekIndex >= 0 && weekIndex < 4) {
-        weeks[weekIndex] += (tx.total_harga || 0);
+        weeks[weekIndex] += (tx.total_harga || 0) + (tx.denda || 0);
       }
     }
   });

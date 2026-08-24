@@ -9,7 +9,6 @@ import {
   and,
   or,
   count,
-  sum,
   gte,
   ne,
   lt,
@@ -63,9 +62,9 @@ export const dashboardService = {
       .where(eq(transaction.rentalStatus, 'terlambat'));
     const terlambat = terlambatResult[0]?.total || 0;
 
-    // Monthly revenue (excluding menunggu_dp)
+    // Monthly revenue (excluding menunggu_dp) — includes penalties
     const revenueResult = await db
-      .select({ total: sum(transaction.totalPrice) })
+      .select({ total: sql`COALESCE(SUM(${transaction.totalPrice}), 0) + COALESCE(SUM(${transaction.penaltyAmount}), 0)` })
       .from(transaction)
       .where(
         and(
