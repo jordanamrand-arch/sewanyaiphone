@@ -19,6 +19,21 @@ export function renderTransaksiForm() {
   let selectedJenis = 'hari';
   let selectedDurasi = '';
   let selectedPrice = 0;
+  let diskonTipe = 'nominal'; // 'nominal' or 'persen'
+  let diskonNilai = 0;
+
+  function getDiscountAmount() {
+    if (!diskonNilai || diskonNilai <= 0 || selectedPrice <= 0) return 0;
+    if (diskonTipe === 'persen') {
+      const persen = Math.min(diskonNilai, 100);
+      return Math.round(selectedPrice * persen / 100);
+    }
+    return Math.min(diskonNilai, selectedPrice);
+  }
+
+  function getFinalPrice() {
+    return Math.max(0, selectedPrice - getDiscountAmount());
+  }
 
   function render() {
     const pricing = selectedIphoneId ? store.getPricingByIphone(selectedIphoneId) : [];
@@ -37,8 +52,10 @@ export function renderTransaksiForm() {
       autoEnd = formatDateTimeInput(start);
     }
 
+    const finalPrice = getFinalPrice();
+    const discountAmount = getDiscountAmount();
     const nominal_dp = Number(document.getElementById('tx-dp')?.value) || 0;
-    const sisa = selectedPrice - nominal_dp;
+    const sisa = finalPrice - nominal_dp;
 
     mainContent.innerHTML = `
       <div class="page-enter">
@@ -104,11 +121,56 @@ export function renderTransaksiForm() {
 
             ${selectedPrice > 0 ? `
               <div class="price-display" style="margin-top: var(--space-md);">
-                <div class="price-label">Total Harga</div>
+                <div class="price-label">Harga Dasar</div>
                 <div class="price-value">${formatRupiah(selectedPrice)}</div>
               </div>
             ` : ''}
           </div>
+
+          <!-- Section: Diskon -->
+          ${selectedPrice > 0 ? `
+          <div class="tx-form-section">
+            <div class="tx-form-section-title">
+              <i data-lucide="percent"></i>
+              Diskon
+            </div>
+            <div class="discount-section">
+              <div class="discount-type-toggle">
+                <button type="button" class="toggle-option discount-type-opt ${diskonTipe === 'nominal' ? 'active' : ''}" data-diskon-tipe="nominal">
+                  <i data-lucide="banknote" style="width: 16px; height: 16px;"></i>
+                  Potongan Harga (Rp)
+                </button>
+                <button type="button" class="toggle-option discount-type-opt ${diskonTipe === 'persen' ? 'active' : ''}" data-diskon-tipe="persen">
+                  <i data-lucide="percent" style="width: 16px; height: 16px;"></i>
+                  Persentase (%)
+                </button>
+              </div>
+
+              <div class="discount-input-row">
+                <div class="form-group discount-input-group">
+                  <label class="form-label">${diskonTipe === 'nominal' ? 'Potongan Harga (Rp)' : 'Persentase Diskon (%)'}</label>
+                  <div class="discount-input-wrapper">
+                    <span class="discount-input-prefix">${diskonTipe === 'nominal' ? 'Rp' : '%'}</span>
+                    <input type="number" class="form-input discount-input" id="tx-diskon" placeholder="0" min="0" ${diskonTipe === 'persen' ? 'max="100"' : `max="${selectedPrice}"`} value="${diskonNilai || ''}" />
+                  </div>
+                </div>
+
+                ${discountAmount > 0 ? `
+                <div class="discount-preview">
+                  <div class="discount-preview-item">
+                    <span class="discount-preview-label">Potongan</span>
+                    <span class="discount-preview-value discount-amount">-${formatRupiah(discountAmount)}</span>
+                  </div>
+                  <div class="discount-preview-item">
+                    <span class="discount-preview-label">Harga Setelah Diskon</span>
+                    <span class="discount-preview-value discount-final">${formatRupiah(finalPrice)}</span>
+                  </div>
+                </div>
+                ` : ''}
+              </div>
+            </div>
+          </div>
+          ` : ''}
 
           <!-- Section: Data Pelanggan -->
           <div class="tx-form-section">
@@ -155,9 +217,22 @@ export function renderTransaksiForm() {
 
             <div class="price-breakdown">
               <div class="price-item">
-                <div class="price-item-label">Total Harga</div>
+                <div class="price-item-label">Harga Dasar</div>
                 <div class="price-item-value">${formatRupiah(selectedPrice)}</div>
               </div>
+              ${discountAmount > 0 ? `
+              <div class="price-item">
+                <div class="price-item-label">Diskon ${diskonTipe === 'persen' ? `(${diskonNilai}%)` : ''}</div>
+                <div class="price-item-value discount-amount">-${formatRupiah(discountAmount)}</div>
+              </div>
+              ` : ''}
+              <div class="price-item">
+                <div class="price-item-label">${discountAmount > 0 ? 'Total Bayar' : 'Total Harga'}</div>
+                <div class="price-item-value" style="font-weight: 700; ${discountAmount > 0 ? 'background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;' : ''}">${formatRupiah(finalPrice)}</div>
+              </div>
+            </div>
+
+            <div class="price-breakdown" style="margin-top: var(--space-sm);">
               <div class="price-item">
                 <div class="price-item-label">Nominal DP</div>
                 <div class="price-item-value" id="dp-display">${formatRupiah(nominal_dp)}</div>
@@ -170,7 +245,7 @@ export function renderTransaksiForm() {
 
             <div class="form-group" style="margin-top: var(--space-md);">
               <label class="form-label">Nominal DP (Rp)</label>
-              <input type="number" class="form-input" id="tx-dp" placeholder="0" min="0" max="${selectedPrice}" value="${nominal_dp || ''}" />
+              <input type="number" class="form-input" id="tx-dp" placeholder="0" min="0" max="${finalPrice}" value="${nominal_dp || ''}" />
             </div>
           </div>
 
@@ -199,6 +274,7 @@ export function renderTransaksiForm() {
       selectedIphoneId = e.target.value;
       selectedDurasi = '';
       selectedPrice = 0;
+      diskonNilai = 0;
       render();
     });
 
@@ -208,6 +284,7 @@ export function renderTransaksiForm() {
         selectedJenis = opt.dataset.jenis;
         selectedDurasi = '';
         selectedPrice = 0;
+        diskonNilai = 0;
         render();
       });
     });
@@ -217,8 +294,55 @@ export function renderTransaksiForm() {
       opt.addEventListener('click', () => {
         selectedDurasi = opt.dataset.durasi;
         selectedPrice = Number(opt.dataset.harga);
+        diskonNilai = 0;
         render();
       });
+    });
+
+    // Discount type toggle
+    document.querySelectorAll('.discount-type-opt').forEach(opt => {
+      opt.addEventListener('click', () => {
+        diskonTipe = opt.dataset.diskonTipe;
+        diskonNilai = 0;
+        render();
+      });
+    });
+
+    // Discount value input
+    document.getElementById('tx-diskon')?.addEventListener('input', (e) => {
+      diskonNilai = Number(e.target.value) || 0;
+      // Clamp persen to 100
+      if (diskonTipe === 'persen' && diskonNilai > 100) {
+        diskonNilai = 100;
+        e.target.value = '100';
+      }
+      // Clamp nominal to selectedPrice
+      if (diskonTipe === 'nominal' && diskonNilai > selectedPrice) {
+        diskonNilai = selectedPrice;
+        e.target.value = String(selectedPrice);
+      }
+
+      // Live-update preview without full re-render
+      const discountAmt = getDiscountAmount();
+      const final = getFinalPrice();
+      const dp = Number(document.getElementById('tx-dp')?.value) || 0;
+
+      // Update discount preview
+      const previewAmt = document.querySelector('.discount-preview-value.discount-amount');
+      const previewFinal = document.querySelector('.discount-preview-value.discount-final');
+      if (previewAmt) previewAmt.textContent = `-${formatRupiah(discountAmt)}`;
+      if (previewFinal) previewFinal.textContent = formatRupiah(final);
+
+      // Update payment breakdown
+      const dpDisplay = document.getElementById('dp-display');
+      const sisaDisplay = document.getElementById('sisa-display');
+      if (dpDisplay) dpDisplay.textContent = formatRupiah(dp);
+      if (sisaDisplay) sisaDisplay.textContent = formatRupiah(Math.max(0, final - dp));
+
+      // If discount just appeared/disappeared, do full re-render
+      if ((discountAmt > 0 && !previewAmt) || (discountAmt === 0 && previewAmt)) {
+        render();
+      }
     });
 
     // Auto-calc end time when start changes
@@ -239,10 +363,11 @@ export function renderTransaksiForm() {
     // DP input
     document.getElementById('tx-dp')?.addEventListener('input', (e) => {
       const dp = Number(e.target.value) || 0;
+      const final = getFinalPrice();
       const dpDisplay = document.getElementById('dp-display');
       const sisaDisplay = document.getElementById('sisa-display');
       if (dpDisplay) dpDisplay.textContent = formatRupiah(dp);
-      if (sisaDisplay) sisaDisplay.textContent = formatRupiah(Math.max(0, selectedPrice - dp));
+      if (sisaDisplay) sisaDisplay.textContent = formatRupiah(Math.max(0, final - dp));
     });
 
     // Submit
@@ -253,6 +378,8 @@ export function renderTransaksiForm() {
       const startVal = document.getElementById('tx-start')?.value;
       const endVal = document.getElementById('tx-end')?.value;
       const dp = Number(document.getElementById('tx-dp')?.value) || 0;
+      const finalPrice = getFinalPrice();
+      const discountAmount = getDiscountAmount();
 
       // Validation
       if (!iphone_id) { showToast('Pilih unit iPhone', 'warning'); return; }
@@ -270,7 +397,7 @@ export function renderTransaksiForm() {
 
       const iphone = store.getIphoneById(iphone_id);
       let status_pembayaran = 'menunggu_dp';
-      if (dp >= selectedPrice) status_pembayaran = 'lunas';
+      if (dp >= finalPrice) status_pembayaran = 'lunas';
       else if (dp > 0) status_pembayaran = 'sudah_dp';
 
       const now = new Date();
@@ -286,13 +413,17 @@ export function renderTransaksiForm() {
         tanggal_waktu_mulai: toLocalISOString(startVal),
         tanggal_waktu_selesai: toLocalISOString(endVal),
         nominal_dp: dp,
-        nominal_pelunasan: Math.max(0, selectedPrice - dp),
-        total_harga: selectedPrice,
+        nominal_pelunasan: Math.max(0, finalPrice - dp),
+        total_harga: finalPrice,
+        diskon_tipe: discountAmount > 0 ? diskonTipe : null,
+        diskon_nilai: diskonNilai,
+        diskon_nominal: discountAmount,
         status_pembayaran,
         status_rental,
       });
 
-      logActivity(`Membuat transaksi baru ${tx.tx_number} untuk ${iphone?.model} — Pelanggan: ${nama}`);
+      const diskonInfo = discountAmount > 0 ? ` (Diskon ${diskonTipe === 'persen' ? diskonNilai + '%' : formatRupiah(discountAmount)})` : '';
+      logActivity(`Membuat transaksi baru ${tx.tx_number} untuk ${iphone?.model} — Pelanggan: ${nama}${diskonInfo}`);
       showToast(`Transaksi ${tx.tx_number} berhasil dibuat!`, 'success');
       navigate('/transaksi');
     });
@@ -300,3 +431,4 @@ export function renderTransaksiForm() {
 
   render();
 }
+

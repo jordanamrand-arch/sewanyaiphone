@@ -28,6 +28,9 @@ interface CreateTransactionData {
   dpAmount: number;
   settlementAmount: number;
   totalPrice: number;
+  discountType?: string | null;
+  discountValue?: number;
+  discountAmount?: number;
   penaltyAmount?: number;
   penaltyNote?: string;
   paymentStatus: 'menunggu_dp' | 'sudah_dp' | 'lunas';
@@ -42,6 +45,9 @@ interface UpdateTransactionData {
   dpAmount?: number;
   settlementAmount?: number;
   totalPrice?: number;
+  discountType?: string | null;
+  discountValue?: number;
+  discountAmount?: number;
   penaltyAmount?: number;
   penaltyNote?: string;
   paymentStatus?: 'menunggu_dp' | 'sudah_dp' | 'lunas';
@@ -104,6 +110,9 @@ export const transactionService = {
         dpAmount: transaction.dpAmount,
         settlementAmount: transaction.settlementAmount,
         totalPrice: transaction.totalPrice,
+        discountType: transaction.discountType,
+        discountValue: transaction.discountValue,
+        discountAmount: transaction.discountAmount,
         penaltyAmount: transaction.penaltyAmount,
         penaltyNote: transaction.penaltyNote,
         paymentStatus: transaction.paymentStatus,
@@ -148,6 +157,9 @@ export const transactionService = {
         dpAmount: transaction.dpAmount,
         settlementAmount: transaction.settlementAmount,
         totalPrice: transaction.totalPrice,
+        discountType: transaction.discountType,
+        discountValue: transaction.discountValue,
+        discountAmount: transaction.discountAmount,
         penaltyAmount: transaction.penaltyAmount,
         penaltyNote: transaction.penaltyNote,
         paymentStatus: transaction.paymentStatus,
@@ -208,6 +220,9 @@ export const transactionService = {
         dpAmount: data.dpAmount,
         settlementAmount: data.settlementAmount,
         totalPrice: data.totalPrice,
+        discountType: data.discountType || null,
+        discountValue: data.discountValue || 0,
+        discountAmount: data.discountAmount || 0,
         penaltyAmount: data.penaltyAmount || 0,
         penaltyNote: data.penaltyNote || null,
         paymentStatus: data.paymentStatus,

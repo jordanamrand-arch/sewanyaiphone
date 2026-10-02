@@ -155,8 +155,21 @@ export function renderTransaksiDetail(params) {
           <!-- Pembayaran -->
           <div class="tx-detail-card">
             <h3><i data-lucide="wallet"></i> Pembayaran</h3>
+            ${tx.diskon_nominal > 0 ? `
+              <div class="tx-detail-row">
+                <span class="label">Harga Dasar</span>
+                <span class="value"><span class="price-original">${formatRupiah(tx.total_harga + tx.diskon_nominal)}</span></span>
+              </div>
+              <div class="tx-detail-row discount-row">
+                <span class="label">
+                  <i data-lucide="tag" style="width: 14px; height: 14px;"></i>
+                  Diskon ${tx.diskon_tipe === 'persen' ? `(${tx.diskon_nilai}%)` : ''}
+                </span>
+                <span class="value discount-amount-detail">-${formatRupiah(tx.diskon_nominal)}</span>
+              </div>
+            ` : ''}
             <div class="tx-detail-row">
-              <span class="label">Total Harga</span>
+              <span class="label">${tx.diskon_nominal > 0 ? 'Total Bayar' : 'Total Harga'}</span>
               <span class="value"><strong>${formatRupiah(tx.total_harga)}</strong></span>
             </div>
             <div class="tx-detail-row">
@@ -237,6 +250,10 @@ export function renderTransaksiDetail(params) {
         'Durasi Sewa': calculateDurationString(tx.tanggal_waktu_mulai, tx.tanggal_waktu_selesai),
         'Status Rental': STATUS_RENTAL_LABELS[tx.status_rental] || tx.status_rental,
         'Status Pembayaran': STATUS_BAYAR_LABELS[tx.status_pembayaran] || tx.status_pembayaran,
+        'Harga Dasar': tx.diskon_nominal > 0 ? tx.total_harga + tx.diskon_nominal : tx.total_harga,
+        'Tipe Diskon': tx.diskon_tipe === 'persen' ? 'Persentase' : tx.diskon_tipe === 'nominal' ? 'Potongan Harga' : '-',
+        'Nilai Diskon': tx.diskon_tipe === 'persen' ? `${tx.diskon_nilai}%` : tx.diskon_nominal || 0,
+        'Potongan Diskon': tx.diskon_nominal || 0,
         'Total Harga': tx.total_harga,
         'DP': tx.nominal_dp,
         'Sisa Pelunasan': tx.nominal_pelunasan,

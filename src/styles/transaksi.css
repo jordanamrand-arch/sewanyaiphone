@@ -296,3 +296,182 @@
   color: var(--status-terlambat);
   border: 1px solid rgba(239, 68, 68, 0.2);
 }
+
+/* ---- Discount / Diskon Styles ---- */
+
+.discount-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.discount-type-toggle {
+  display: flex;
+  gap: var(--space-sm);
+}
+
+.discount-type-toggle .toggle-option {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 10px 16px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--bg-glass-border);
+  background: transparent;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.discount-type-toggle .toggle-option:hover {
+  border-color: rgba(99, 102, 241, 0.3);
+  background: rgba(99, 102, 241, 0.05);
+}
+
+.discount-type-toggle .toggle-option.active {
+  background: rgba(99, 102, 241, 0.12);
+  border-color: rgba(99, 102, 241, 0.4);
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.discount-input-row {
+  display: flex;
+  gap: var(--space-md);
+  align-items: flex-start;
+}
+
+.discount-input-group {
+  flex: 1;
+  min-width: 0;
+}
+
+.discount-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.discount-input-prefix {
+  position: absolute;
+  left: 14px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.discount-input {
+  padding-left: 42px !important;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.discount-preview {
+  flex: 1;
+  min-width: 180px;
+  background: rgba(34, 197, 94, 0.06);
+  border: 1px solid rgba(34, 197, 94, 0.15);
+  border-radius: var(--radius-md);
+  padding: var(--space-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  animation: discountSlideIn 0.3s ease;
+}
+
+@keyframes discountSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.discount-preview-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.discount-preview-label {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+.discount-preview-value {
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+.discount-preview-value.discount-amount {
+  color: #22c55e;
+}
+
+.discount-preview-value.discount-final {
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-size: 1.05rem;
+}
+
+/* Discount amount text in payment breakdown */
+.price-item-value.discount-amount {
+  color: #22c55e;
+  font-weight: 700;
+}
+
+/* Discount row in detail page */
+.discount-row .label {
+  color: #22c55e !important;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-weight: 500;
+}
+
+.discount-amount-detail {
+  color: #22c55e !important;
+  font-weight: 700 !important;
+  -webkit-text-fill-color: #22c55e !important;
+}
+
+/* Strikethrough original price */
+.price-original {
+  text-decoration: line-through;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  font-weight: 400;
+}
+
+/* Badge diskon */
+.badge-diskon {
+  background: rgba(34, 197, 94, 0.1);
+  color: #22c55e;
+  border: 1px solid rgba(34, 197, 94, 0.2);
+}
+
+/* Responsive */
+@media (max-width: 767px) {
+  .discount-type-toggle {
+    flex-direction: column;
+  }
+
+  .discount-input-row {
+    flex-direction: column;
+  }
+
+  .discount-preview {
+    min-width: 100%;
+  }
+}

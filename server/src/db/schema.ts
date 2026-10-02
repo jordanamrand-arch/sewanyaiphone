@@ -139,6 +139,9 @@ export const transaction = pgTable(
     dpAmount: integer('dp_amount').notNull().default(0),
     settlementAmount: integer('settlement_amount').notNull().default(0),
     totalPrice: integer('total_price').notNull(),
+    discountType: text('discount_type'),
+    discountValue: integer('discount_value').notNull().default(0),
+    discountAmount: integer('discount_amount').notNull().default(0),
     penaltyAmount: integer('penalty_amount').notNull().default(0),
     penaltyNote: text('penalty_note'),
     paymentStatus: paymentStatusEnum('payment_status')
