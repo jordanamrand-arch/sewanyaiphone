@@ -15,7 +15,8 @@ export function renderLaporan() {
   const monthlyData = {};
   
   transactions.forEach(tx => {
-    const date = new Date(tx.created_at);
+    // Use rental start date to attribute revenue to the month the rental begins
+    const date = new Date(tx.tanggal_waktu_mulai);
     const monthKey = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
     
     if (!monthlyData[monthKey]) {

@@ -194,7 +194,7 @@ function initRevenueChart() {
   }
 
   transactions.forEach(tx => {
-    const date = new Date(tx.created_at);
+    const date = new Date(tx.tanggal_waktu_mulai);
     const diffTime = Math.abs(now - date);
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
     

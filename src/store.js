@@ -575,8 +575,9 @@ export const store = {
 
     const pendapatanBulan = transactions
       .filter((t) => {
-        const created = new Date(t.created_at);
-        return created >= monthStart && t.status_pembayaran !== 'menunggu_dp';
+        // Use rental start date to attribute revenue to the correct month
+        const startDate = new Date(t.tanggal_waktu_mulai);
+        return startDate >= monthStart && startDate < new Date(now.getFullYear(), now.getMonth() + 1, 1) && t.status_pembayaran !== 'menunggu_dp';
       })
       .reduce((sum, t) => sum + (t.total_harga || 0) + (t.denda || 0), 0);
 
